@@ -55,7 +55,7 @@ header.desktop {
 
 /* 可选：调整 Logo 大小，避免显示过大 */
 .header-title .logo {
-  max-width: 80px; /* 根据需求调整 */
+  max-width: 180px; /* 根据需求调整 */
   height: auto;
 }
 
