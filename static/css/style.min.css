@@ -69,27 +69,30 @@ header.desktop {
 .header-link {
   display: flex;
   align-items: center;
-  gap: 6px;
   text-decoration: none;
-  color: inherit;
 }
 
-.header-link .logo {
+.logo {
   width: 40px;
   height: 40px;
   object-fit: contain;
-  display: block;
+  margin-right: 10px;
 }
 
-.header-title-pre i {
-  font-size: 20px;
-  color: #e25555;
+.title-group {
+  display: flex;
+  align-items: center;
+  font-size: 1.2rem;
+  color: #333;
 }
 
-.header-text {
-  font-size: 20px;
-  line-height: 1;
-  white-space: nowrap;
+.title-group .icon {
+  margin-right: 5px;
+  font-size: 1.2rem;
+}
+
+.title-group .text {
+  font-weight: bold;
 }
 
 
