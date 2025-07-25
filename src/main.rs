@@ -33,8 +33,8 @@ fn base_context() -> Context {
     ]);
 
     // 页面标题和描述
-    context.insert("title", "我的博客");
-    context.insert("description", "欢迎访问我的博客");
+    context.insert("title", "浩·仁");
+    context.insert("description", "云-<<浩·仁>>-墨");
     context.insert("canonical_url", "https://lee.haoren.info/");
     context.insert("rss_url", "https://lee.haoren.info/rss.xml");
     context.insert("rss_title", "我的博客 RSS 订阅");
