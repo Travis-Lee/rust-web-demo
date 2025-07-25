@@ -1,0 +1,55 @@
+/* style.min.css */
+body {
+    font-family: Arial, sans-serif;
+    font-size: 16px; /* 或者你想要的大小 */
+    margin: 0;
+    padding: 0;
+}
+
+.header-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: #f4f4f4;
+}
+
+.menu-inner {
+    display: flex;
+    gap: 20px;
+}
+
+.menu-item {
+    text-decoration: none;
+    color: #333;
+}
+
+.main {
+    padding: 20px;
+}
+
+/* 桌面端样式：默认显示桌面头部，隐藏移动端头部 */
+header.mobile {
+  display: none; /* 默认隐藏移动端头部 */
+}
+
+header.desktop {
+  display: block; /* 默认显示桌面端头部 */
+}
+
+/* 移动端适配：屏幕宽度 <= 768px 时切换显示 */
+@media (max-width: 768px) {
+  header.desktop {
+    display: none; /* 隐藏桌面端头部 */
+  }
+  
+  header.mobile {
+    display: block; /* 显示移动端头部 */
+  }
+}
+
+/* 可选：调整 Logo 大小，避免显示过大 */
+.header-title .logo {
+  max-width: 120px; /* 根据需求调整 */
+  height: auto;
+}
