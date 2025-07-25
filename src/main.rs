@@ -33,8 +33,8 @@ fn base_context() -> Context {
     ]);
 
     // 页面标题和描述
-    context.insert("title", "浩·仁");
-    context.insert("description", "云-<<浩·仁>>-墨");
+    context.insert("title", "小鲨鱼");
+    context.insert("description", "云-<<小鲨鱼>>-墨");
     context.insert("canonical_url", "https://lee.haoren.info/");
     context.insert("rss_url", "https://lee.haoren.info/rss.xml");
     context.insert("rss_title", "我的博客 RSS 订阅");
@@ -58,8 +58,8 @@ fn base_context() -> Context {
 
     // Header 相关
     context.insert("home_url", "/");
-    context.insert("title", "浩·仁");
-    context.insert("header_title", "浩·仁");
+    context.insert("title", "小鲨鱼");
+    context.insert("header_title", "小鲨鱼");
     context.insert("logo_url", "/static/images/logo.png");
 
     context.insert("posts_url", "/posts");
