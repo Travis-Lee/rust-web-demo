@@ -55,6 +55,14 @@ header.desktop {
 
 /* 可选：调整 Logo 大小，避免显示过大 */
 .header-title .logo {
-  max-width: 120px; /* 根据需求调整 */
+  max-width: 80px; /* 根据需求调整 */
   height: auto;
 }
+
+/* 响应式设置：在小屏幕下缩小 logo */
+@media (max-width: 768px) {
+  .header-title .logo {
+    max-width: 100px;
+  }
+}
+
