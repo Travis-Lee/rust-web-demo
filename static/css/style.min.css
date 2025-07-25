@@ -25,7 +25,12 @@ body {
 }
 
 .main {
+    max-width: 800px;   /* 控制最大宽度 */
+    margin: 40px auto;  /* 上下 40px，左右 auto 实现居中 */
     padding: 20px;
+    background: white;  /* 可选：白底 */
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.05);  /* 可选：柔和阴影 */
+    border-radius: 8px;  /* 可选：圆角 */
 }
 
 /* 桌面端样式：默认显示桌面头部，隐藏移动端头部 */
