@@ -1,36 +1,20 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="{{ lang }}">
 <head>
-  <meta charset="UTF-8" />
-  <title>关于 - 浩·仁</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="/static/css/style.min.css" />
+    {% include 'head.html' %}
 </head>
 <body>
 
-  <header class="desktop">
-    <div class="header-wrapper">
-      <div class="header-title">
-        <a href="/" class="logo">浩·仁</a>
+    {% include 'header.html' %}
+
+    <main class="main">
+      <div class="about-content">
+        {{ about_content | safe }}
       </div>
-      <nav class="menu-inner">
-      
-      </nav>
-    </div>
-  </header>
+    </main>
 
-  <main class="main">
-    <div class="about-content">
-      {{ about_content | safe }}
-    </div>
-  </main>
-
-  <footer style="text-align: center; padding: 20px; color: #888;">
-    &copy; 2025 浩然知行·仁心为本
-  </footer>
+    {% include 'footer.html' %}
 
 </body>
 </html>
-~
-~
-~
+
