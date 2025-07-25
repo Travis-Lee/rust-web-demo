@@ -58,7 +58,7 @@ fn base_context() -> Context {
 
     // Header 相关
     context.insert("home_url", "/");
-    context.insert("title", "Lee博客");
+    context.insert("title", "浩·仁");
     context.insert("header_title", "浩·仁");
     context.insert("logo_url", "/static/images/logo.png");
 
