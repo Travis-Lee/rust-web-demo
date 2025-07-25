@@ -76,7 +76,7 @@ header.desktop {
   width: 40px;
   height: 40px;
   object-fit: contain;
-  margin-right: 10px;
+  margin-right: 0; /* 去掉右边距 */
 }
 
 .title-group {
@@ -84,6 +84,7 @@ header.desktop {
   align-items: center;
   font-size: 1.2rem;
   color: #333;
+  margin-left: 8px; /* logo 和标题之间间距，8px或你喜欢的值 */
 }
 
 .title-group .icon {
@@ -94,6 +95,4 @@ header.desktop {
 .title-group .text {
   font-weight: bold;
 }
-
-
 
