@@ -53,17 +53,9 @@ header.desktop {
   }
 }
 
-/* 可选：调整 Logo 大小，避免显示过大 */
-/*
-.header-title .logo {
-  max-width: 180px !important; 
-  height: auto !important;
-}
-*/
-
 /* Logo 样式，覆盖所有宽高限制，确保最大宽度生效 */
 .header-title .logo {
-  max-width: 180px !important;  /* 调大最大宽度 */
+  max-width: 80px !important;  /* 调大最大宽度 */
   height: auto !important;
   object-fit: contain;
   margin-right: 10px !important; /* 保持间距 */
