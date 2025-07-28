@@ -2,8 +2,10 @@ use axum::{
     http::StatusCode,
     response::{Html, IntoResponse},
     routing::get,
+    extract::Query,
     Router,
 };
+use serde::Deserialize;
 use tower_http::services::ServeDir;
 use std::net::SocketAddr;
 use axum_server::tls_rustls::RustlsConfig;
@@ -77,6 +79,9 @@ fn base_context() -> Context {
     context.insert("about_url", "/about");
     context.insert("about_text", "关于");
 
+    context.insert("search_url", "/search");
+    context.insert("search_text", "搜索");
+
     context.insert("github_url", "https://github.com/Travis-Lee");
 
     context.insert("search_placeholder", "搜索文章...");
@@ -103,8 +108,24 @@ fn base_context() -> Context {
 
     // 文章列表示例
     context.insert("posts", &vec![
-        json!({"url": "/posts/hello-world", "title": "你好，世界"}),
-        json!({"url": "/posts/rust-tutorial", "title": "Rust 教程"}),
+        json!({
+            "url": "/posts/hello-world", 
+            "title": "你好，世界",
+            "cover": "/static/article-default.png",
+            "tags": [{"url": "/tags/rust", "name": "Rust"}, {"url": "/tags/web", "name": "Web"}],
+            "category": {"url": "/categories/tech", "name": "技术"},
+            "date": "2025-07-28",
+            "summary": "这是第一篇示例文章的摘要内容，它将展示在搜索结果列表中，让用户对文章有一个初步的了解。"
+        }),
+        json!({
+            "url": "/posts/rust-tutorial", 
+            "title": "Rust 教程",
+            "cover": "/static/article-default.png",
+            "tags": [{"url": "/tags/tutorial", "name": "教程"}],
+            "category": {"url": "/categories/programming", "name": "编程"},
+            "date": "2025-07-27",
+            "summary": "这是一篇关于 Rust 编程语言的详细教程，涵盖了从入门到进阶的各种知识点，帮助你快速上手 Rust。"
+        }),
     ]);
 
     // 分类列表示例
@@ -157,6 +178,47 @@ async fn categories_handler() -> Html<String> {
     Html(rendered)
 }
 
+#[derive(Debug, Deserialize)]
+struct SearchParams {
+    q: Option<String>,
+}
+
+async fn search_handler(Query(params): Query<SearchParams>) -> Html<String> {
+    let mut context = base_context();
+    
+    // 获取搜索查询参数
+    let query = params.q.unwrap_or_default();
+    context.insert("search_query", &query);
+    
+    // 如果有搜索查询，过滤文章列表
+    if !query.is_empty() {
+        let all_posts = context.get("posts").and_then(|v| v.as_array().cloned()).unwrap_or_default();
+        let filtered_posts: Vec<_> = all_posts.into_iter()
+            .filter(|post| {
+                // 从文章中提取标题
+                let title = post.get("title")
+                    .and_then(|t| t.as_str())
+                    .unwrap_or("");
+                
+                // 检查标题是否包含搜索查询（不区分大小写）
+                title.to_lowercase().contains(&query.to_lowercase())
+            })
+            .collect();
+        
+        context.insert("posts", &filtered_posts);
+        context.insert("result_count", &filtered_posts.len());
+        context.insert("has_results", &(!filtered_posts.is_empty()));
+    } else {
+        // 没有搜索查询时，显示所有文章
+        let all_posts = context.get("posts").and_then(|v| v.as_array().cloned()).unwrap_or_default();
+        context.insert("result_count", &all_posts.len());
+        context.insert("has_results", &(!all_posts.is_empty()));
+    }
+    
+    let rendered = TERA.render("search.html", &context).unwrap();
+    Html(rendered)
+}
+
 /*
 async fn about_handler() -> Html<String> {
     let context = base_context();
@@ -200,19 +262,15 @@ async fn main() -> anyhow::Result<()> {
         .route("/tags", get(tags_handler))
         .route("/categories", get(categories_handler))
         .route("/about", get(about_handler))
+        .route("/search", get(search_handler))
         .nest_service("/static", static_service)
         .fallback(not_found_handler);
 
-    let addr = SocketAddr::from(([0, 0, 0, 0], 443));
-    println!("Listening on https://{}", addr);
+    // Changed to run on port 3000 for local development
+    let addr = SocketAddr::from(([127, 0, 0, 1], 3000));
+    println!("Listening on http://{}", addr);
 
-    let config = RustlsConfig::from_pem_file(
-        "/etc/letsencrypt/live/lee.haoren.info/fullchain.pem",
-        "/etc/letsencrypt/live/lee.haoren.info/privkey.pem",
-    )
-    .await?;
-
-    axum_server::bind_rustls(addr, config)
+    axum::Server::bind(&addr)
         .serve(app.into_make_service())
         .await?;
 

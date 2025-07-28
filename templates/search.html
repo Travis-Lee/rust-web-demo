@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="{{ lang }}">
+<head>
+    {% include 'head.html' %}
+    <style>
+        .search-results-container {
+            padding: 2rem 0;
+        }
+        .post-card {
+            display: flex;
+            margin-bottom: 2rem;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            background: var(--card-background-color);
+            transition: transform 0.2s ease-in-out;
+        }
+        .post-card:hover {
+            transform: translateY(-5px);
+        }
+        .post-cover {
+            flex: 0 0 250px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: none;
+        }
+        .post-cover-inner {
+            width: 150px;
+            height: 150px;
+            border-radius: 6px;
+            background-size: cover;
+            background-position: center;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+        .post-content {
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+        }
+        .post-title a {
+            color: var(--h-color);
+            text-decoration: none;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        .post-meta {
+            font-size: 0.85rem;
+            color: #888;
+            margin: 0.5rem 0;
+        }
+        .post-meta span:not(:last-child)::after {
+            content: '•';
+            margin: 0 0.5rem;
+        }
+        .post-summary {
+            margin-top: 1rem;
+            color: var(--p-color);
+            flex-grow: 1;
+        }
+        .post-tags a {
+            margin-right: 0.5rem;
+            font-size: 0.8rem;
+            color: var(--link-color);
+            text-decoration: none;
+            background: rgba(0,0,0,0.05);
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div id="mask"></div>
+    <div class="wrapper">
+        {% include 'header.html' %}
+        <main class="main">
+            <div class="container search-results-container">
+                <h1 class="page-title">搜索结果</h1>
+                {% if search_query %}
+                <div class="search-info">
+                    <p>搜索“<strong>{{ search_query }}</strong>”的结果，共找到 <span class="result-count">{{ result_count }}</span> 篇文章</p>
+                </div>
+                {% endif %}
+                <div class="posts-list">
+                    {% if has_results %}
+                        {% for post in posts %}
+                            <article class="post-card">
+                                <div class="post-cover">
+                                    <div class="post-cover-inner" style="background-image: url('{% if post.cover %}{{ post.cover }}{% else %}/static/images/article-default.png{% endif %}');"></div>
+                                </div>
+                                <div class="post-content">
+                                    <h2 class="post-title"><a href="{{ post.url }}">{{ post.title }}</a></h2>
+                                    <div class="post-meta">
+                                        <span><i class="far fa-calendar-alt"></i> {{ post.date }}</span>
+                                        <span><i class="far fa-folder"></i> <a href="{{ post.category.url }}">{{ post.category.name }}</a></span>
+                                    </div>
+                                    <div class="post-summary">
+                                        <p>{{ post.summary }}</p>
+                                    </div>
+                                    <div class="post-tags">
+                                        <i class="fas fa-tags"></i>
+                                        {% for tag in post.tags %}
+                                            <a href="{{ tag.url }}">{{ tag.name }}</a>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </article>
+                        {% endfor %}
+                    {% else %}
+                        <div class="no-results">
+                            <i class="fas fa-search fa-4x"></i>
+                            <h3>没有找到相关文章</h3>
+                            <p>尝试使用不同的关键词或检查拼写是否正确</p>
+                            <a href="/posts" class="back-to-posts">查看所有文章</a>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </main>
+        {% include 'footer.html' %}
+    </div>
+</body>
+</html>

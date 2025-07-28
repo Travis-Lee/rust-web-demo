@@ -1,0 +1,86 @@
+/* 搜索框相关样式 */
+
+/* 搜索框容器样式 */
+.header-search-container {
+    position: relative;
+    margin: 0 20px;
+}
+
+.search-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.input-container {
+    position: relative;
+    display: inline-block;
+}
+
+/* 搜索输入框样式 */
+.search-input {
+    padding: 6px 30px 6px 10px; /* 减少内边距，使整体高度降低 */
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+    width: 200px;
+    height: 32px; /* 固定高度 */
+    box-sizing: border-box; /* 确保内边距不会增加元素实际大小 */
+    transition: all 0.3s ease;
+}
+
+.search-input:focus {
+    outline: none;
+    border-color: #4a89dc;
+    box-shadow: 0 0 0 2px rgba(74, 137, 220, 0.2);
+}
+
+/* 搜索清除按钮样式 */
+.search-clear-button {
+    position: absolute;
+    right: 10px; /* 位于输入框内部右侧 */
+    top: 50%;
+    transform: translateY(-50%);
+    color: #999;
+    cursor: pointer;
+    z-index: 2;
+    font-size: 12px; /* 减小图标大小 */
+    line-height: 1;
+    padding: 0; /* 移除内边距 */
+    width: 14px; /* 固定宽度 */
+    height: 14px; /* 固定高度 */
+    text-align: center;
+    transition: color 0.2s ease;
+    display: none; /* 默认隐藏，由JS控制显示 */
+}
+
+.search-clear-button:hover {
+    color: #333;
+}
+
+/* 搜索提交按钮样式 */
+.search-submit-button {
+    margin-left: 8px;
+    padding: 8px 16px;
+    background-color: #000000;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.search-submit-button:hover {
+    background-color: #333;
+}
+
+/* 移动端搜索样式调整 */
+@media (max-width: 768px) {
+    .search-clear-button {
+        right: 40px;
+    }
+    
+    .search-input {
+        width: 150px;
+    }
+}

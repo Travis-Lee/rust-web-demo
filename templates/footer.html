@@ -1,12 +1,12 @@
 <footer>
-    <div id="fixed-buttons">
+    <!-- <div id="fixed-buttons">
         <a href="#" id="back-to-top" class="fixed-button" title="{{ back_to_top_title }}">
             <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
         </a>
         <a href="#" id="view-comments" class="fixed-button" title="{{ view_comments_title }}">
             <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
         </a>
-    </div>
+    </div> -->
 
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/algoliasearch@4.13.1/dist/algoliasearch-lite.umd.min.js"></script>
@@ -33,7 +33,8 @@
         };
     </script>
 
-    <script type="text/javascript" src="/js/theme.min.js"></script>
+    <script type="text/javascript" src="{{ static_url }}/js/theme.min.js"></script>
+    <script type="text/javascript" src="{{ static_url }}/js/custom.js"></script>
 
     <!-- ✅ 自动隐藏加载遮罩 -->
     <script>
