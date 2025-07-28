@@ -8,31 +8,22 @@
         </a>
     </div>
 
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/autocomplete.js@0.38.1/dist/autocomplete.min.js"></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/algoliasearch@4.13.1/dist/algoliasearch-lite.umd.min.js"></script>
+    <!-- 非 Algolia 的功能保留 -->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script>
 
+    <!-- 代码配置（如果你模板用到了复制按钮等） -->
     <script type="text/javascript">
         window.config = {
             "code": {
                 "copyTitle": "{{ copy_title }}",
                 "maxShownLines": {{ max_shown_lines }}
-            },
-            "search": {
-                "algoliaAppID": "{{ algolia_app_id }}",
-                "algoliaIndex": "{{ algolia_index }}",
-                "algoliaSearchKey": "{{ algolia_search_key }}",
-                "highlightTag": "{{ highlight_tag }}",
-                "maxResultLength": {{ max_result_length }},
-                "noResultsFound": "{{ no_results_found }}",
-                "snippetLength": {{ snippet_length }},
-                "type": "{{ search_type }}"
             }
         };
     </script>
 
+    <!-- 你的主题 JS -->
     <script type="text/javascript" src="/js/theme.min.js"></script>
 
     <!-- ✅ 自动隐藏加载遮罩 -->

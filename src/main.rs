@@ -18,8 +18,18 @@ use std::fs;
 
 lazy_static! {
     static ref TERA: Tera = {
-        let mut tera = Tera::new("templates/**/*.html").expect("Parsing error(s)");
-        tera.autoescape_on(vec![".html", ".sql"]);
+        let tera = match Tera::new("templates/**/*.html") {
+            Ok(t) => {
+                println!("加载模板列表:");
+                for name in t.get_template_names() {
+                    println!(" - {}", name);
+                }
+                t
+            }
+            Err(e) => {
+                panic!("模板加载失败: {}", e);
+            }
+        };
         tera
     };
 }
@@ -82,10 +92,12 @@ fn base_context() -> Context {
 
     context.insert("github_url", "https://github.com/Travis-Lee");
 
+    /* 
     context.insert("search_placeholder", "搜索文章...");
     context.insert("search_title", "搜索");
     context.insert("clear_title", "清除搜索");
     context.insert("theme_switch_title", "切换主题");
+    */
 
     // Footer 相关
     context.insert("back_to_top_title", "返回顶部");
@@ -200,7 +212,7 @@ async fn main() -> anyhow::Result<()> {
     let static_service = ServeDir::new("static");
 
     // 初始化 Tantivy 索引
-    let index = backend::search::create_index().expect("创建索引失败");
+    let index = backend::search::create_or_open_index().expect("索引初始化失败");
     let shared_index = Arc::new(index);
 
     let app = Router::new()
@@ -214,7 +226,7 @@ async fn main() -> anyhow::Result<()> {
         .fallback(not_found_handler)
         .with_state(shared_index);  // 注入状态
 
-
+    /*
     let addr = SocketAddr::from(([0, 0, 0, 0], 443));
     println!("Listening on https://{}", addr);
 
@@ -227,7 +239,13 @@ async fn main() -> anyhow::Result<()> {
     axum_server::bind_rustls(addr, config)
         .serve(app.into_make_service())
         .await?;
-
+    */
+    
+    println!("服务器启动在 http://localhost:3000");
+    axum::Server::bind(&"0.0.0.0:3000".parse().unwrap())
+        .serve(app.into_make_service())
+        .await
+        .unwrap();
     Ok(())
 }
 

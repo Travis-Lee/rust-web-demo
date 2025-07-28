@@ -67,8 +67,11 @@ pub async fn search_handler(
     Json(results)
 }
 
+/*
 pub fn create_index() -> tantivy::Result<Index> {
     use tantivy::schema::*;
+    use std::path::Path;
+    use std::fs;
 
     let mut schema_builder = Schema::builder();
     let title = schema_builder.add_text_field("title", TEXT | STORED);
@@ -76,9 +79,10 @@ pub fn create_index() -> tantivy::Result<Index> {
     let url = schema_builder.add_text_field("url", STORED);
     let schema = schema_builder.build();
 
-    let index_path = "./tantivy_index";
-    let index = Index::create_in_dir(index_path, schema.clone())?;
+    let index_path = Path::new("./tantivy_index");
+    fs::create_dir_all(index_path)?; // 新增：确保目录存在
 
+    let index = Index::create_in_dir(index_path, schema.clone())?;
     let mut writer = index.writer(50_000_000)?;
 
     let _ = writer.add_document(doc!(
@@ -96,5 +100,48 @@ pub fn create_index() -> tantivy::Result<Index> {
     writer.commit()?;
 
     Ok(index)
+}
+*/
+
+use std::fs;
+use std::path::Path;
+use tantivy::schema::*;
+
+pub fn create_or_open_index() -> tantivy::Result<Index> {
+    let index_path = Path::new("./tantivy_index");
+
+    // 定义 schema（无论是新建或打开都需要）
+    let mut schema_builder = Schema::builder();
+    let title = schema_builder.add_text_field("title", TEXT | STORED);
+    let body = schema_builder.add_text_field("body", TEXT | STORED);
+    let url = schema_builder.add_text_field("url", STORED);
+    let schema = schema_builder.build();
+
+    if index_path.exists() {
+        // 目录存在，尝试打开已有索引
+        let index = Index::open_in_dir(index_path)?;
+        Ok(index)
+    } else {
+        // 目录不存在，创建并写入示例文档
+        fs::create_dir_all(index_path)?;
+        let index = Index::create_in_dir(index_path, schema.clone())?;
+        let mut writer = index.writer(50_000_000)?;
+
+        writer.add_document(doc!(
+            title => "Rust Tantivy 介绍",
+            body => "Tantivy 是一个用 Rust 写的全文搜索库，非常适合自建搜索。",
+            url => "/posts/tantivy-intro.html"
+        ));
+
+        writer.add_document(doc!(
+            title => "Axum Web 框架",
+            body => "Axum 是 Rust 生态中轻量级的 Web 框架。",
+            url => "/posts/axum-guide.html"
+        ));
+
+        writer.commit()?;
+
+        Ok(index)
+    }
 }
 

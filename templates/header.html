@@ -1,48 +1,31 @@
 <header class="desktop" id="header-desktop">
   <div class="header-wrapper">
     <div class="header-title">
-      <a href="{{ home_url }}" title="{{ title }}" class="header-link">
-        <img
-          class="lazyload logo"
-          src="/static/svg/loading.min.svg"
-          data-src="{{ logo_url }}"
-          data-srcset="{{ logo_url }}, {{ logo_url }} 1.5x, {{ logo_url }} 2x"
-          data-sizes="auto"
-          alt="{{ logo_url }}"
-          title="{{ logo_url }}" />
+      <a href="{{ home_url | default(value="/") }}" title="{{ title | default(value="我的博客") }}" class="header-link">
+        <img class="lazyload logo"
+             src="/static/svg/loading.min.svg"
+             data-src="{{ logo_url | default(value='/static/logo.png') }}"
+             alt="Logo" />
         <span class="title-group">
-          <span class="text">{{ header_title }}</span>
+          <span class="text">{{ header_title | default(value="浩·仁") }}</span>
         </span>
       </a>
     </div>
 
     <div class="menu">
       <div class="menu-inner">
-        <a class="menu-item" href="{{ posts_url }}"> {{ posts_text }} </a>
-        <a class="menu-item" href="{{ tags_url }}"> {{ tags_text }} </a>
-        <a class="menu-item" href="{{ categories_url }}"> {{ categories_text }} </a>
-        <a class="menu-item" href="{{ docs_url }}"> {{ docs_text }} </a>
-        <a class="menu-item" href="{{ about_url }}"> {{ about_text }} </a>
-        <a class="menu-item" href="{{ github_url }}" title="GitHub" rel="noopener noreffer" target="_blank">
+        <a class="menu-item" href="{{ posts_url | default(value='/posts') }}"> {{ posts_text | default(value="文章") }} </a>
+        <a class="menu-item" href="{{ tags_url | default(value='/tags') }}"> {{ tags_text | default(value="标签") }} </a>
+        <a class="menu-item" href="{{ categories_url | default(value='/categories') }}"> {{ categories_text | default(value="分类") }} </a>
+        <a class="menu-item" href="{{ docs_url | default(value='/docs') }}"> {{ docs_text | default(value="文档") }} </a>
+        <a class="menu-item" href="{{ about_url | default(value='/about') }}"> {{ about_text | default(value="关于") }} </a>
+        <a class="menu-item" href="{{ github_url | default(value='#') }}" title="GitHub" rel="noopener noreffer" target="_blank">
           <i class='fab fa-github fa-fw' aria-hidden="true"></i>
         </a>
         <span class="menu-item delimiter"></span>
-        <span class="menu-item search" id="search-desktop">
-          <input type="text" placeholder="{{ search_placeholder }}" id="search-input-desktop">
-          <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-desktop" title="{{ search_title }}">
-            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
-          </a>
-          <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-desktop" title="{{ clear_title }}">
-            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
-          </a>
-          <span class="search-button search-loading" id="search-loading-desktop">
-            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
-          </span>
-        </span>
-        <a href="javascript:void(0);" class="menu-item theme-switch" title="{{ theme_switch_title }}">
-          <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
-        </a>
-        <a href="javascript:void(0);" class="menu-item language" title="{{ language_title }}">
+
+        <!-- 多语言切换保留 -->
+        <a href="javascript:void(0);" class="menu-item language" title="{{ language_title | default(value='语言') }}">
           <i class="fa fa-globe" aria-hidden="true"></i>
           <select class="language-select" id="language-select-desktop" onchange="location = this.value;">
             {% for lang_option in language_options %}
@@ -59,17 +42,13 @@
   <div class="header-container">
     <div class="header-wrapper">
       <div class="header-title">
-        <a href="{{ home_url }}" title="{{ title }}" class="header-link">
-          <img
-            class="lazyload logo"
-            src="/static/svg/loading.min.svg"
-            data-src="{{ logo_url }}"
-            data-srcset="{{ logo_url }}, {{ logo_url }} 1.5x, {{ logo_url }} 2x"
-            data-sizes="auto"
-            alt="{{ logo_url }}"
-            title="{{ logo_url }}" />
+        <a href="{{ home_url | default(value="/") }}" title="{{ title | default(value="我的博客") }}" class="header-link">
+          <img class="lazyload logo"
+               src="/static/svg/loading.min.svg"
+               data-src="{{ logo_url | default(value='/static/logo.png') }}"
+               alt="Logo" />
           <span class="title-group">
-            <span class="text">{{ header_title }}</span>
+            <span class="text">{{ header_title | default(value="浩·仁") }}</span>
           </span>
         </a>
       </div>
@@ -80,36 +59,17 @@
     </div>
 
     <div class="menu" id="menu-mobile">
-      <div class="search-wrapper">
-        <div class="search mobile" id="search-mobile">
-          <input type="text" placeholder="{{ search_placeholder }}" id="search-input-mobile">
-          <a href="javascript:void(0);" class="search-button search-toggle" id="search-toggle-mobile" title="{{ search_title }}">
-            <i class="fas fa-search fa-fw" aria-hidden="true"></i>
-          </a>
-          <a href="javascript:void(0);" class="search-button search-clear" id="search-clear-mobile" title="{{ clear_title }}">
-            <i class="fas fa-times-circle fa-fw" aria-hidden="true"></i>
-          </a>
-          <span class="search-button search-loading" id="search-loading-mobile">
-            <i class="fas fa-spinner fa-fw fa-spin" aria-hidden="true"></i>
-          </span>
-        </div>
-        <a href="javascript:void(0);" class="search-cancel" id="search-cancel-mobile">
-          {{ cancel_text }}
-        </a>
-      </div>
-
-      <a class="menu-item" href="{{ posts_url }}" title=""> {{ posts_text }} </a>
-      <a class="menu-item" href="{{ tags_url }}" title=""> {{ tags_text }} </a>
-      <a class="menu-item" href="{{ categories_url }}" title=""> {{ categories_text }} </a>
-      <a class="menu-item" href="{{ docs_url }}" title=""> {{ docs_text }} </a>
-      <a class="menu-item" href="{{ about_url }}" title=""> {{ about_text }} </a>
-      <a class="menu-item" href="{{ github_url }}" title="GitHub" rel="noopener noreffer" target="_blank">
+      <a class="menu-item" href="{{ posts_url | default(value='/posts') }}"> {{ posts_text | default(value="文章") }} </a>
+      <a class="menu-item" href="{{ tags_url | default(value='/tags') }}"> {{ tags_text | default(value="标签") }} </a>
+      <a class="menu-item" href="{{ categories_url | default(value='/categories') }}"> {{ categories_text | default(value="分类") }} </a>
+      <a class="menu-item" href="{{ docs_url | default(value='/docs') }}"> {{ docs_text | default(value="文档") }} </a>
+      <a class="menu-item" href="{{ about_url | default(value='/about') }}"> {{ about_text | default(value="关于") }} </a>
+      <a class="menu-item" href="{{ github_url | default(value='#') }}" title="GitHub" rel="noopener noreffer" target="_blank">
         <i class='fab fa-github fa-fw' aria-hidden="true"></i>
       </a>
-      <a href="javascript:void(0);" class="menu-item theme-switch" title="{{ theme_switch_title }}">
-        <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
-      </a>
-      <a href="javascript:void(0);" class="menu-item language" title="{{ language_title }}">
+
+      <!-- 移动端多语言切换 -->
+      <a href="javascript:void(0);" class="menu-item language" title="{{ language_title | default(value='语言') }}">
         <i class="fa fa-globe" aria-hidden="true"></i>
         <select class="language-select" id="language-select-mobile" onchange="location = this.value;">
           {% for lang_option in language_options %}
