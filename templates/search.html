@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>{{ search_title }}</h1>
+<div>
+    <input id="search-input" placeholder="{{ search_placeholder }}">
+    <button id="search-btn">{{ search_title }}</button>
+    <button id="clear-btn">{{ clear_title }}</button>
+</div>
+
+<div id="search-results" style="margin-top:1rem;"></div>
+
+<script>
+const input = document.getElementById('search-input');
+const btn = document.getElementById('search-btn');
+const clearBtn = document.getElementById('clear-btn');
+const resultsDiv = document.getElementById('search-results');
+
+btn.addEventListener('click', async () => {
+    const q = input.value.trim();
+    if (!q) return;
+    resultsDiv.textContent = '搜索中...';
+
+    try {
+        const resp = await fetch(`/search?q=${encodeURIComponent(q)}`);
+        const data = await resp.json();
+        if (data.length === 0) {
+            resultsDiv.textContent = '{{ no_results_found }}';
+            return;
+        }
+        resultsDiv.innerHTML = '';
+        data.forEach(item => {
+            const div = document.createElement('div');
+            div.innerHTML = `<a href="${item.url}"><strong>${item.title}</strong></a><p>${item.snippet}...</p>`;
+            resultsDiv.appendChild(div);
+        });
+    } catch(e) {
+        resultsDiv.textContent = '搜索出错';
+    }
+});
+
+clearBtn.addEventListener('click', () => {
+    input.value = '';
+    resultsDiv.innerHTML = '';
+});
+</script>
+{% endblock %}
+

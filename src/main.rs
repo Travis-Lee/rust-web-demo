@@ -1,9 +1,11 @@
+mod backend;
 use axum::{
     http::StatusCode,
     response::{Html, IntoResponse},
     routing::get,
     Router,
 };
+use std::sync::Arc;
 use tower_http::services::ServeDir;
 use std::net::SocketAddr;
 use axum_server::tls_rustls::RustlsConfig;
@@ -12,6 +14,7 @@ use lazy_static::lazy_static;
 use serde_json::json;
 use pulldown_cmark::{Parser, Options, html};
 use std::fs;
+
 
 lazy_static! {
     static ref TERA: Tera = {
@@ -90,6 +93,7 @@ fn base_context() -> Context {
     context.insert("copy_title", "复制代码");
     context.insert("max_shown_lines", &10);
 
+    /*
     context.insert("algolia_app_id", "你的AlgoliaAppID");
     context.insert("algolia_index", "你的索引名称");
     context.insert("algolia_search_key", "你的搜索Key");
@@ -98,6 +102,7 @@ fn base_context() -> Context {
     context.insert("no_results_found", "未找到结果");
     context.insert("snippet_length", &50);
     context.insert("search_type", "algolia");
+    */
 
     context.insert("cancel_text", "取消");
 
@@ -194,14 +199,21 @@ async fn not_found_handler() -> impl IntoResponse {
 async fn main() -> anyhow::Result<()> {
     let static_service = ServeDir::new("static");
 
+    // 初始化 Tantivy 索引
+    let index = backend::search::create_index().expect("创建索引失败");
+    let shared_index = Arc::new(index);
+
     let app = Router::new()
         .route("/", get(index_handler))
         .route("/posts", get(posts_handler))
         .route("/tags", get(tags_handler))
         .route("/categories", get(categories_handler))
         .route("/about", get(about_handler))
+        .route("/search", get(backend::search::search_handler))  // 添加搜索接口路由
         .nest_service("/static", static_service)
-        .fallback(not_found_handler);
+        .fallback(not_found_handler)
+        .with_state(shared_index);  // 注入状态
+
 
     let addr = SocketAddr::from(([0, 0, 0, 0], 443));
     println!("Listening on https://{}", addr);

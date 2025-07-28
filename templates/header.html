@@ -24,7 +24,7 @@
         <a class="menu-item" href="{{ docs_url }}"> {{ docs_text }} </a>
         <a class="menu-item" href="{{ about_url }}"> {{ about_text }} </a>
         <a class="menu-item" href="{{ github_url }}" title="GitHub" rel="noopener noreffer" target="_blank">
-          <i class='fab fa-github fa-fw' aria-hidden='true'></i>
+          <i class='fab fa-github fa-fw' aria-hidden="true"></i>
         </a>
         <span class="menu-item delimiter"></span>
         <span class="menu-item search" id="search-desktop">
@@ -104,14 +104,14 @@
       <a class="menu-item" href="{{ docs_url }}" title=""> {{ docs_text }} </a>
       <a class="menu-item" href="{{ about_url }}" title=""> {{ about_text }} </a>
       <a class="menu-item" href="{{ github_url }}" title="GitHub" rel="noopener noreffer" target="_blank">
-        <i class='fab fa-github fa-fw' aria-hidden='true'></i>
+        <i class='fab fa-github fa-fw' aria-hidden="true"></i>
       </a>
       <a href="javascript:void(0);" class="menu-item theme-switch" title="{{ theme_switch_title }}">
         <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
       </a>
-      <a href="javascript:void(0);" class="menu-item" title="{{ language_title }}">
-        <i class="fa fa-globe fa-fw" aria-hidden="true"></i>
-        <select class="language-select" onchange="location = this.value;">
+      <a href="javascript:void(0);" class="menu-item language" title="{{ language_title }}">
+        <i class="fa fa-globe" aria-hidden="true"></i>
+        <select class="language-select" id="language-select-mobile" onchange="location = this.value;">
           {% for lang_option in language_options %}
             <option value="{{ lang_option.url }}" {% if lang_option.selected %}selected{% endif %}>{{ lang_option.name }}</option>
           {% endfor %}
@@ -120,11 +120,4 @@
     </div>
   </div>
 </header>
-
-<div class="search-dropdown desktop">
-  <div id="search-dropdown-desktop"></div>
-</div>
-<div class="search-dropdown mobile">
-  <div id="search-dropdown-mobile"></div>
-</div>
 
