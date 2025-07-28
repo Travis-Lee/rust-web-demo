@@ -1,20 +1,8 @@
-<!DOCTYPE html>
-<html lang="{{ lang }}">
-<head>
-    {% include 'head.html' %}
-</head>
-<body>
+{% extends "base.html" %}
 
-    {% include 'header.html' %}
-
-    <main class="main">
-      <div class="about-content">
-        {{ about_content | safe }}
-      </div>
-    </main>
-
-    {% include 'footer.html' %}
-
-</body>
-</html>
+{% block content %}
+  <div class="about-content">
+    {{ about_content | safe }}
+  </div>
+{% endblock %}
 
