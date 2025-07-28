@@ -19,6 +19,10 @@ lazy_static! {
     static ref TERA: Tera = {
         let tera = match Tera::new("templates/**/*.html") {
             Ok(t) => {
+                println!("加载模板列表:");
+                for name in t.get_template_names() {
+                    println!(" - {}", name);
+                }
                 t
             }
             Err(e) => {
