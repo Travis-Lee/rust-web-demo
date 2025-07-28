@@ -22,9 +22,15 @@
         <a class="menu-item" href="{{ github_url | default(value='#') }}" title="GitHub" rel="noopener noreffer" target="_blank">
           <i class='fab fa-github fa-fw' aria-hidden="true"></i>
         </a>
+
+        <!-- 🔍 搜索框（桌面） -->
+        <form id="search-form-desktop" class="menu-item search-form" action="/search" method="get">
+          <input type="text" name="q" placeholder="搜索…" required>
+        </form>
+
         <span class="menu-item delimiter"></span>
 
-        <!-- 多语言切换保留 -->
+        <!-- 多语言切换 -->
         <a href="javascript:void(0);" class="menu-item language" title="{{ language_title | default(value='语言') }}">
           <i class="fa fa-globe" aria-hidden="true"></i>
           <select class="language-select" id="language-select-desktop" onchange="location = this.value;">
@@ -67,6 +73,11 @@
       <a class="menu-item" href="{{ github_url | default(value='#') }}" title="GitHub" rel="noopener noreffer" target="_blank">
         <i class='fab fa-github fa-fw' aria-hidden="true"></i>
       </a>
+
+      <!-- 🔍 搜索框（移动） -->
+      <form id="search-form-mobile" class="menu-item search-form" action="/search" method="get">
+        <input type="text" name="q" placeholder="搜索…" required>
+      </form>
 
       <!-- 移动端多语言切换 -->
       <a href="javascript:void(0);" class="menu-item language" title="{{ language_title | default(value='语言') }}">
