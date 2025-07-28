@@ -87,29 +87,11 @@ fn base_context() -> Context {
 
     context.insert("github_url", "https://github.com/Travis-Lee");
 
-    /* 
-    context.insert("search_placeholder", "搜索文章...");
-    context.insert("search_title", "搜索");
-    context.insert("clear_title", "清除搜索");
-    context.insert("theme_switch_title", "切换主题");
-    */
-
     // Footer 相关
     context.insert("back_to_top_title", "返回顶部");
     context.insert("view_comments_title", "查看评论");
     context.insert("copy_title", "复制代码");
     context.insert("max_shown_lines", &10);
-
-    /*
-    context.insert("algolia_app_id", "你的AlgoliaAppID");
-    context.insert("algolia_index", "你的索引名称");
-    context.insert("algolia_search_key", "你的搜索Key");
-    context.insert("highlight_tag", "em");
-    context.insert("max_result_length", &100);
-    context.insert("no_results_found", "未找到结果");
-    context.insert("snippet_length", &50);
-    context.insert("search_type", "algolia");
-    */
 
     context.insert("cancel_text", "取消");
 
@@ -131,9 +113,6 @@ fn base_context() -> Context {
         json!({"url": "/tags/tutorial", "name": "教程"}),
     ]);
 
-    // 关于页面内容示例
-    //context.insert("about_content", "这是Lee的个人博客，分享技术文章和编程心得。");
-
     context.insert("static_url", "/static");
     context
 }
@@ -148,8 +127,6 @@ async fn index_handler() -> impl IntoResponse {
         }
     }
 }
-
-
 
 async fn posts_handler() -> Html<String> {
     let context = base_context();
@@ -168,15 +145,6 @@ async fn categories_handler() -> Html<String> {
     let rendered = TERA.render("categories.html", &context).unwrap();
     Html(rendered)
 }
-
-/*
-async fn about_handler() -> Html<String> {
-    let context = base_context();
-    let rendered = TERA.render("about.html", &context).unwrap();
-    Html(rendered)
-}
-*/
-
 
 async fn about_handler() -> Html<String> {
     let mut context = base_context();
