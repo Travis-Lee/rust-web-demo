@@ -20,7 +20,7 @@
     <div class="header-search-container">
         <form action="/search" method="get" class="search-wrapper" id="search-desktop">
             <div class="input-container">
-                <input type="text" name="q" class="search-input" placeholder="搜索其实很简单" id="search-input-desktop" value="{{ search_query }}">
+                <input type="text" name="q" class="search-input" placeholder="搜索其实很简单" id="search-input-desktop" value="{{ search_query | default(value="") }}">
                 <a href="javascript:void(0);" class="search-clear-button" id="search-clear-desktop" title="{{ clear_title }}">
                     <i class="fas fa-times-circle" aria-hidden="true"></i>
                 </a>
@@ -81,7 +81,7 @@
     <div class="menu" id="menu-mobile">
       <div class="search-wrapper">
         <form action="/search" method="get" class="search mobile" id="search-mobile">
-          <input type="text" name="q" placeholder="{{ search_placeholder }}" id="search-input-mobile" value="{{ search_query }}">
+          <input type="text" name="q" placeholder="{{ search_placeholder }}" id="search-input-mobile" value="{{ search_query | default(value="") }}">
           <button type="submit" class="search-button search-toggle" id="search-toggle-mobile" title="{{ search_title }}">
             <i class="fas fa-search fa-fw" aria-hidden="true"></i>
           </button>
